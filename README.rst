@@ -78,7 +78,7 @@ The following files are created:
   * test/code-f2808a/data-2fbaf/bestfit1.out -- results of the optimization
   * test/code-f2808a/data-2fbaf/samples1.out -- results of the sampling
 
-
+Read `the code <https://github.com/JohannesBuchner/stagedstan/blob/master/stagedstan.py>`_ for API documentation.
 
 
 
