@@ -250,5 +250,5 @@ model {
 	test_code(stancode)
 
 if __name__ == '__main__':
-	test2()
+	test1()
 

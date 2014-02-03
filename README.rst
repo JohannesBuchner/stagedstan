@@ -1,28 +1,31 @@
-Staged Stan Python package
+StagedStan Python package
 ===========================
 
-This package runs the Stan_ Hamiltonean Monte Carlo sampler.
+This package runs the Stan_ Markov Chain Monte Carlo sampler.
 
-Staged Stan Python works in a deterministic fashion: Given 
+* StagedStan works similar to "make", namely in a deterministic fashion.
+* Runs consist of *compilation*, *optimization* and *sampling* (starting from the best fit).
+* When aborted, it continues where it was stopped.
+* Unlike PyStan_, all results are stored in a file structure.
+* Each output is uniquely associated to the Stan code, data and seed used. If neither of them change, the result is not re-computed.
+* This also allows you to execute Stan on another machine, and to copy the output over.
+* StagedStan can parse the summary files of Stan runs, and write data dump files.
+* StagedStan allows the input of data from Python (e.g. numpy arrays).
 
-  - Stan code,
-  - data (python dictionary) and 
-  - a seed
+Installation
+-------------
 
-it computes the best fit once, and runs the sampling from the best fit once.
-When the code is called again, the results are loaded from the cache.
+Download and install the python package as usual (python setup.py).
 
-Unlike PyStan_, the outputs (best fit, samples) are stored directly. 
-
-Furthermore, the stan executable can be compiled and run on a different machine,
-and the outputs copied over. Staged Stan will pick up the results.
-
-Staged Stan requires Stan. Let the STANDIR environment variable point to the Stan directory (where makefile lives).
+StagedStan requires Stan. Let the STANDIR environment variable point to the Stan directory (where makefile lives).
 
 .. _Stan: http://mc-stan.org/
 .. _PyStan: http://mc-stan.org/pystan.html
 
-Example::
+Example
+---------
+
+Python code::
 
 	stancode = """
 	data {
@@ -61,12 +64,13 @@ Example::
 Output (parts are omitted)::
 	
 	[...] building executable [...]
-	Running code: ('./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/code.exe', 'output', 'file=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/bestfit1.out', 'data', 'file=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/data.R', 'random', 'seed=1', 'optimize')
+	Running code: ('./code-f2808a03aef7f025449bb9df437764b6318acbb3/code.exe', 'output', 'file=./code-f2808a03aef7f025449bb9df437764b6318acbb3/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/bestfit1.out', 'data', 'file=./code-f2808a03aef7f025449bb9df437764b6318acbb3/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/data.R', 'random', 'seed=1', 'optimize')
 
 	Best fit:
-	  mymean               : [ 2.07380232 -0.9599354 ] 
+	  mean1                : 2.07380231707 
+	  mean2                : -0.959935398484 
 
-	Running code: ('./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/code.exe', 'output', 'file=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/samples1.out', 'data', 'file=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/data.R', 'init=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/bestfit1.R', 'random', 'seed=1', 'sample')
+	Running code: ('./code-f2808a03aef7f025449bb9df437764b6318acbb3/code.exe', 'output', 'file=./code-f2808a03aef7f025449bb9df437764b6318acbb3/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/samples1.out', 'data', 'file=./code-f2808a03aef7f025449bb9df437764b6318acbb3/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/data.R', 'init=./code-f2808a03aef7f025449bb9df437764b6318acbb3/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/bestfit1.R', 'random', 'seed=1', 'sample')
 
 	Gradient evaluation took 0 seconds
 	1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
@@ -101,13 +105,8 @@ Output (parts are omitted)::
 		        0.03 seconds (Total)
 
 	Samples:
-	  mymean               : [[ 2.10492  -0.897088]
-	 [ 2.04165  -0.946299]
-	 [ 2.11458  -0.894294]
-	 ..., 
-	 [ 2.09594  -0.895492]
-	 [ 2.06744  -0.939044]
-	 [ 2.07893  -0.956279]] 
+	  mean1                : [ 2.10492  2.04165  2.11458  2.04987  2.06028  2.05426  2.09401  ...]
+	  mean2                : [-0.897088 -0.946299 -0.894294 -0.963678 -1.00048  -0.983169 -0.9965 ...]
 
 The following files are created:
 
