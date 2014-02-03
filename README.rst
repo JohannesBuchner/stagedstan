@@ -1,23 +1,26 @@
 Staged Stan Python package
 ===========================
 
-This package runs the Stan Hamiltonean Monte Carlo sampler.
+This package runs the Stan_ Hamiltonean Monte Carlo sampler.
 
 Staged Stan Python works in a deterministic fashion: Given 
 
-  - stan code,
+  - Stan code,
   - data (python dictionary) and 
   - a seed
 
 it computes the best fit once, and runs the sampling from the best fit once.
 When the code is called again, the results are loaded from the cache.
 
-Unlike pystan, the outputs (best fit, samples) are stored directly. 
+Unlike PyStan_, the outputs (best fit, samples) are stored directly. 
 
 Furthermore, the stan executable can be compiled and run on a different machine,
 and the outputs copied over. Staged Stan will pick up the results.
 
 Staged Stan requires Stan. Let the STANDIR environment variable point to the Stan directory (where makefile lives).
+
+.. _Stan: http://mc-stan.org/
+.. _PyStan: http://mc-stan.org/pystan.html
 
 Example::
 

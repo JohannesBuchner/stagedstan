@@ -18,10 +18,10 @@ setup(
     author_email = "johannes.buchner.acad [@t] gmx.com",
     maintainer = "Johannes Buchner",
     maintainer_email = "johannes.buchner.acad [@t] gmx.com",
-    url = "http://github.com/JohannesBuchner/stagedstan",
+    url = "https://github.com/JohannesBuchner/stagedstan",
     license = "GPLv3",
-    packages = ["stagedstan"],
-    requires = ["numpy (>=1.5)", ],
+    py_modules = ['stagedstan'],
+    requires = ["numpy (>=1.5)"],
     long_description=long_description,
 )
 
