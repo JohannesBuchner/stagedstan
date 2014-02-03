@@ -58,10 +58,47 @@ Example::
 			print '  %-20s : %s ' % (k, v)
 	print
 
-Output::
+Output (parts are omitted)::
 	
+	[...] building executable [...]
+	Running code: ('./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/code.exe', 'output', 'file=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/bestfit1.out', 'data', 'file=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/data.R', 'random', 'seed=1', 'optimize')
+
 	Best fit:
 	  mymean               : [ 2.07380232 -0.9599354 ] 
+
+	Running code: ('./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/code.exe', 'output', 'file=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/samples1.out', 'data', 'file=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/data.R', 'init=./code-92682818b5cf62a059c86189cc8ede9daa6f06ff/data-2fbafe7c1993572a57131ef2a800f4072a088f3b/bestfit1.R', 'random', 'seed=1', 'sample')
+
+	Gradient evaluation took 0 seconds
+	1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+	Adjust your expectations accordingly!
+
+
+	Iteration:    1 / 2000 [  0%]  (Warmup)
+	Iteration:  100 / 2000 [  5%]  (Warmup)
+	Iteration:  200 / 2000 [ 10%]  (Warmup)
+	Iteration:  300 / 2000 [ 15%]  (Warmup)
+	Iteration:  400 / 2000 [ 20%]  (Warmup)
+	Iteration:  500 / 2000 [ 25%]  (Warmup)
+	Iteration:  600 / 2000 [ 30%]  (Warmup)
+	Iteration:  700 / 2000 [ 35%]  (Warmup)
+	Iteration:  800 / 2000 [ 40%]  (Warmup)
+	Iteration:  900 / 2000 [ 45%]  (Warmup)
+	Iteration: 1000 / 2000 [ 50%]  (Warmup)
+	Iteration: 1001 / 2000 [ 50%]  (Sampling)
+	Iteration: 1100 / 2000 [ 55%]  (Sampling)
+	Iteration: 1200 / 2000 [ 60%]  (Sampling)
+	Iteration: 1300 / 2000 [ 65%]  (Sampling)
+	Iteration: 1400 / 2000 [ 70%]  (Sampling)
+	Iteration: 1500 / 2000 [ 75%]  (Sampling)
+	Iteration: 1600 / 2000 [ 80%]  (Sampling)
+	Iteration: 1700 / 2000 [ 85%]  (Sampling)
+	Iteration: 1800 / 2000 [ 90%]  (Sampling)
+	Iteration: 1900 / 2000 [ 95%]  (Sampling)
+	Iteration: 2000 / 2000 [100%]  (Sampling)
+
+	  Elapsed Time: 0.01 seconds (Warm-up)
+		        0.02 seconds (Sampling)
+		        0.03 seconds (Total)
 
 	Samples:
 	  mymean               : [[ 2.10492  -0.897088]
@@ -78,7 +115,7 @@ The following files are created:
   * test/code-f2808a/data-2fbaf/bestfit1.out -- results of the optimization
   * test/code-f2808a/data-2fbaf/samples1.out -- results of the sampling
 
-Read `the code <https://github.com/JohannesBuchner/stagedstan/blob/master/stagedstan.py>`_ for API documentation.
+Read `the code <https://github.com/JohannesBuchner/stagedstan/blob/master/stagedstan.py>`_ (only ~160 lines) for API documentation.
 
 
 
