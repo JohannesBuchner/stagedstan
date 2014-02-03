@@ -1,3 +1,22 @@
+"""
+Cached and lazy initialisation of stan models.
+Allows running stan externally.
+
+Store code by sha1 sum
+Store data by sha1 sum
+Store best fit and samples:
+
+codehash/
+ |- code.stan
+ |- code.exe
+ |- datahash/
+    |- data.R
+    |- bestfit.R
+    |- samples.out
+
+Refer to the source of the test1() function for an example.
+"""
+
 import hashlib
 import os
 import numpy
@@ -14,22 +33,7 @@ def hash_without_whitespaces(text):
 	text = re.sub(' * ', ' ', text)
 	return hashlib.sha1(text).hexdigest()
 
-"""
-Cached and lazy initialisation of stan models.
-Allows running stan externally.
 
-Store code by sha1 sum
-Store data by sha1 sum
-Store best fit and samples:
-
-codehash/
- |- code.stan
- |- code.exe
- |- datahash/
-    |- data.R
-    |- bestfit.R
-    |- samples.txt
-"""
 def get_codeinfo(code):
 	codehash = hash_without_whitespaces(code)
 	codepath = os.path.join(cachedir, 'code-%s' % codehash)
@@ -163,7 +167,7 @@ def get_best_fit(code, data, seed=1):
 	return best_fit
 
 
-def get_samples(code, data, seed=1):
+def get_samples(code, data, seed=1, shuffle=False):
 	codeinfo = get_codeinfo(code)
 	exe = get_executable(codeinfo)
 	datainfo = get_datainfo(codeinfo, data)
@@ -177,7 +181,14 @@ def get_samples(code, data, seed=1):
 	if not os.path.exists(outputfile):
 		run_executable(exe, 'sample', codeinfo, datainfo, outputfile,
 			"init=%s" % initialfile, "random", "seed=%d" % seed)
-	return parse_output(outputfile)
+	samples = parse_output(outputfile)
+	if shuffle:
+		order = numpy.arange(samples.values()[0].shape[0])
+		numpy.random.shuffle(order)
+		return dict([(k, v[order]) for k, v in samples.iteritems()])
+	else:
+		return samples
+	
 
 def test_code(stancode):
 	numpy.random.seed(0)
@@ -192,10 +203,11 @@ def test_code(stancode):
 			print '  %-20s : %s ' % (k, v)
 	print
 	print 'Samples:'
-	for k,v in get_samples(stancode, data).iteritems():
+	for k,v in get_samples(stancode, data, shuffle=True).iteritems():
 		if '__' not in k:
 			print '  %-20s : %s ' % (k, v)
 	print
+
 def test1():
 	# test it with simple code
 	stancode = """
@@ -216,6 +228,7 @@ model {
 }
 """
 	test_code(stancode)
+
 def test2():
 	# test it with simple code
 	stancode = """
